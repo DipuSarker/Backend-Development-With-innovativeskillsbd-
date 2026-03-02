@@ -1,4 +1,43 @@
 {% extends "../base.html" %}
 
 {% block main_block %}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Our Products</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {% for product in products %}
+        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+            {% if product.discounted_price > 0 %}
+            <div class="relative">
+                <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">
+                    {{ product.discount_percentage }}% OFF
+                </span>
+            </div>
+            {% endif %}
+            <a href="#" class="block">
+                <img class="w-full h-48 object-cover object-cover hover:scale-105 transition-transform duration-300" src="{{ product.image.url }}" alt="{{ product.name }}" />
+            </a>
+            <div class="p-4">
+                <a href="#" class="block">
+                    <h5 class="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-2">{{ product.name }}</h5>
+                </a>
+                <div class="flex items-center justify-between">
+                    <div class="flex flex-col">
+                        {% if product.discounted_price > 0 %}
+                        <span class="text-2xl font-bold text-green-600">${{ product.discounted_price }}</span>
+                        <span class="text-lg text-gray-500 line-through">${{ product.retail_price }}</span>
+                        {% else %}
+                        <span class="text-2xl font-bold text-gray-800">${{ product.retail_price }}</span>
+                        {% endif %}
+                    </div>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock main_block %}

@@ -29,6 +29,15 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+    @property
+    def discount_percentage(self): 
+        if self.discounted_price > 0:
+            diff = self.retail_price - self.discounted_price
+            percent = (diff/self.retail_price) * 100
+            return round(percent, 2)
+        return 0
+    
+    
     
 class Inventory(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, blank=True, null=True)
