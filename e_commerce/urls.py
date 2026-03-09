@@ -22,8 +22,9 @@ from .auth import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('signup/', signup, name='register'),
     path('', include('product.urls')),
-    path('signup/', signup, name='register')
+    path('user/', include('user.urls')),
 ]
 
 if settings.DEBUG:
