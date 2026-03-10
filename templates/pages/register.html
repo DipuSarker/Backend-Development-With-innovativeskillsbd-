@@ -3,26 +3,58 @@
 {% block main_block %}
 
 <div class="w-full max-w-sm bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
+
+    {% comment %} {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %} {% endcomment %}
+
     <form method="POST">
         {% csrf_token %}
 
         <h5 class="text-xl font-semibold text-heading mb-6">Sign up to our platform</h5>
-         <div class="mb-4">
+        <div class="mb-4">
             <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Your name</label>
-            <input type="text" id="name" name="name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="example@company.com" required />
+            <input type="text" id="name" name="name"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="example@company.com" required />
         </div>
         <div class="mb-4">
             <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Your email</label>
-            <input type="email" id="email" name="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="example@company.com" required />
+            <input type="email" id="email" name="email"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="example@company.com" required />
         </div>
         <div>
-            <label for="password" class="block mb-2.5 text-sm font-medium text-heading">Your password</label>
-            <input type="password" id="password" name="password" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="•••••••••" required />
+            <label for="password" class="block mb-2.5 text-sm font-medium text-heading"> password</label>
+            <input type="password" id="password" name="password"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="•••••••••" required />
         </div>
-        
-        <button type="submit" class="text-white bg-black box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full m-3">Sign Up</button>
-        
+
+        <div>
+            <label for="password" class="block mb-2.5 text-sm font-medium text-heading">Confirm password</label>
+            <input type="password" id="password" name="confirm_password"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="•••••••••" required />
+        </div>
+
+        <button type="submit"
+            class="text-white bg-black box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full m-3">Sign
+            Up</button>
+
     </form>
+     {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
 </div>
 
 {% endblock main_block %}
