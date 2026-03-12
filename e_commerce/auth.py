@@ -18,7 +18,7 @@ def signup(request):
         User.objects.create_user(username=username,full_name=name, email=email, password=confirm_password)
     return render(request, 'pages/register.html')
 
-
+# Implement Login from office
 def login_page(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -32,5 +32,4 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect('home_page')
-        
     return render(request, 'pages/login.html')
