@@ -23,6 +23,7 @@ from .auth import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/', signup, name='register'),
+    path('login/', login_page, name='login'),
     path('', include('product.urls')),
     path('user/', include('user.urls')),
 ]
