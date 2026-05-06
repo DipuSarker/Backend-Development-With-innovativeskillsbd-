@@ -1,5 +1,5 @@
 {% extends "../base.html" %}
-
+{% load static %}
 {% block main_block %}
 
 <div class="w-full max-w-sm bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
@@ -24,9 +24,11 @@
         </div>
         <div class="mb-4">
             <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Your email</label>
-            <input type="email" id="email" name="email"
+            <input type="email" id="email" name="email" onchange="duplicate_check(this.value)"
                 class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="example@company.com" required />
+
+                <span id="error_email" class="hidden red-500">Already exist</span>
         </div>
         <div>
             <label for="password" class="block mb-2.5 text-sm font-medium text-heading"> password</label>
@@ -56,5 +58,8 @@
     {% endif %}
 
 </div>
+
+<script src="{% static 'user/js/auth.js' %}"></script>
+
 
 {% endblock main_block %}

@@ -39,7 +39,13 @@ class Product(models.Model):
             return round(percent, 2)
         return 0
     
-    
+    # For image name
+    def save(self, *args, **kwargs):
+       name = self.image.name 
+       extension = name.split('.')[1]
+       new_name = f"{self.name}_{self.product_code}.{extension}"
+       print(new_name)
+       
     
 class Inventory(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, blank=True, null=True)

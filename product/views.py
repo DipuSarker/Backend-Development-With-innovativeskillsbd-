@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 def home_page(request):
     return render(request, 'pages/home.html')
 
-@login_required
+# @login_required
 def product_page(request):
     products = Product.objects.all()
     context = {'products': products}

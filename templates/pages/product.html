@@ -1,5 +1,5 @@
 {% extends "../base.html" %}
-
+{% load static %}
 {% block main_block %}
 
 <div class="container mx-auto px-4 py-8">
@@ -39,5 +39,7 @@
         {% endfor %}
     </div>
 </div>
+
+<script src="{% static 'product/js/product.js' %}"></script>
 
 {% endblock main_block %}
