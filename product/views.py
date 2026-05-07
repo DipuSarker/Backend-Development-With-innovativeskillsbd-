@@ -10,6 +10,6 @@ def home_page(request):
 
 # @login_required
 def product_page(request):
-    products = Product.objects.all()
+    products = Product.objects.all()[:1]
     context = {'products': products}
     return render(request, 'pages/product.html', context)

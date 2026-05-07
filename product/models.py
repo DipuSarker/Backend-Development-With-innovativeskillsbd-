@@ -41,10 +41,17 @@ class Product(models.Model):
     
     # For image name
     def save(self, *args, **kwargs):
-       name = self.image.name 
-       extension = name.split('.')[1]
-       new_name = f"{self.name}_{self.product_code}.{extension}"
-       print(new_name)
+        if self.image and hasattr(self.image, 'name'):
+            name_parts = self.image.name.split('.')
+            if len(name_parts) > 1:
+                extension = name_parts[-1]
+                self.image.name = f"{self.name}_{self.product_code}.{extension}"
+        super(Product, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #    name = self.image.name 
+    #    extension = name.split('.')[1]
+    #    new_name = f"{self.name}_{self.product_code}.{extension}"
+    #    print(new_name)
        
     
 class Inventory(models.Model):
