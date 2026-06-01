@@ -4,12 +4,25 @@ from django.http import JsonResponse
 from product.models import Product
 from rest_framework.decorators import api_view
 from rest_framework.views import Response
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from .serializers import *
 
-class ProductViewSets(viewsets.ModelViewSet):
+# class ProductViewSets(viewsets.ModelViewSet):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+
+class ProductViewSets(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
+# class GenericProductViewSets(viewsets.GenericViewSet):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+    
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializers = self.get_serializer(queryset, many=True)
+        return Response(serializers.data)
 
 @api_view(['GET', 'DELETE'])
 def Product_list_func(request):
