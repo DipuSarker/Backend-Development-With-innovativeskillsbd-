@@ -19,6 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .auth import *
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +31,11 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('', include('product.urls')),
     path('user/', include('user.urls')),
+    path("api-auth/", include("rest_framework.urls")),
+    path("api-token/", ObtainAuthToken.as_view(), name='ObtainAuthToken'),
+    path("api-jwt-token/", TokenObtainPairView.as_view(), name='TokenObtainPairView'),
+    path("api-jwt-refresh/", TokenRefreshView.as_view(), name='TokenRefreshView'),
+    
 ]
 
 if settings.DEBUG:

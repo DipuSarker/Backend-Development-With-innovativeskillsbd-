@@ -19,7 +19,7 @@ class Color(models.Model):
     
     
 class Product(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200)
     product_code = models.CharField(max_length=200, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     color = models.ManyToManyField(Color, blank=True)

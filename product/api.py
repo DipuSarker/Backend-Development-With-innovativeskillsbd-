@@ -7,31 +7,84 @@ from rest_framework.views import Response
 from rest_framework import viewsets, status, generics
 from .serializers import *
 
-# class ProductViewSets(viewsets.ModelViewSet):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-
-class ProductViewSets(generics.RetrieveAPIView):
+class ProductViewSets(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
-# class GenericProductViewSets(viewsets.GenericViewSet):
+    # def update(self, request, pk=None):
+    #     prod = self.get_object()
+    #     serializer = self.get_serializer(prod, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response({'message': 'error'})
+
+# class ProductViewSets(generics.RetrieveAPIView):
 #     queryset = Product.objects.all()
 #     serializer_class = ProductSerializer
+    
+class GenericProductViewSets(viewsets.GenericViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
     
     def list(self, request):
         queryset = self.get_queryset()
         serializers = self.get_serializer(queryset, many=True)
         return Response(serializers.data)
+    
+    def partial_update(self, request, pk=None):
+        prod = self.get_object()
+        serializer = self.get_serializer(prod, data=request.data, partial=False)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response({'message': 'error'})
+    
+    
+    
 
-@api_view(['GET', 'DELETE'])
-def Product_list_func(request):
+@api_view(['GET', 'DELETE','PATCH', 'PUT'])
+def Product_list_func(request, pk=None):
     if request.method == 'GET':
         products = Product.objects.all()
-        serializers = ProductSerializer(products, many=True)
-        return Response(serializers.data, status=status.HTTP_201_CREATED)
-    return Response(serializers.errors, status=status.HTTP_404_NOT_FOUND)
+        s = ProductSerializer(products, many=True)
+        return Response(s.data, status=status.HTTP_201_CREATED)
+    return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    if request.method == 'PATCH':
+        print('Patch')
+        prod = Product.objects.get(id=pk)
+        serializers = ProductSerializer(prod, data=request.data, partial=True)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        print('Put')
+        prod = Product.objects.get(id=pk)
+        serializers = ProductSerializer(prod, data=request.data, partial=False)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+    # if request.method == 'PATCH':
+    #     prod = Product.object.get(id=pk)
+    #     serializer = ProductSerializer(prod, data = request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response({'message': 'error'})
+        
+    # if request.method == 'PUT':
+    #     prod = Product.object.get(id=pk)
+    #     serializer = ProductSerializer(prod, data = request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response({'message': 'error'})
 
 
 
