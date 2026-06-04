@@ -35,6 +35,7 @@ urlpatterns = [
     path("api-token/", ObtainAuthToken.as_view(), name='ObtainAuthToken'),
     path("api-jwt-token/", TokenObtainPairView.as_view(), name='TokenObtainPairView'),
     path("api-jwt-refresh/", TokenRefreshView.as_view(), name='TokenRefreshView'),
+    path("api-jwt-token-custom/", TokenRefreshViewCustomView.as_view(), name='TokenRefreshViewCustom'),
     
 ]
 

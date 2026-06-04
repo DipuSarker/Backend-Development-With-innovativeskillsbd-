@@ -3,6 +3,11 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from user.models import User
 from django.contrib import messages
+from rest_framework_simplejwt.views import TokenObtainPairView
+from e_commerce.auth_serializers import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
 def signup(request):
     if request.method == "POST":
@@ -33,3 +38,22 @@ def login_page(request):
                 login(request, user)
                 return redirect('home_page')
     return render(request, 'pages/login.html')
+
+
+
+class TokenRefreshViewCustomView(APIView):
+    serializer_class = TokenRefreshViewCustomSerializer
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        
+        refresh = RefreshToken.for_user(user)
+        data = {
+            'username': user.username,
+            'email': user.email,
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        }
+        return Response(data)
